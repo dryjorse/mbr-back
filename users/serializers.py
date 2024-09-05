@@ -3,6 +3,13 @@ from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 from .models import User
 from payments.serializers import PaymentSerializer
+from djoser.serializers import UserCreateSerializer
+from django.contrib.auth import get_user_model
+
+class CustomUserCreateSerializer(UserCreateSerializer):
+  class Meta(UserCreateSerializer.Meta):
+    model = get_user_model()
+    fields = ('email', 'password')
 
 class RegisterUserSerializer(serializers.ModelSerializer):
   email = serializers.EmailField(

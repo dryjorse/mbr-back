@@ -31,11 +31,16 @@ class User(AbstractUser):
   phone = models.IntegerField("Номер телефона", unique=True)
   balance = models.DecimalField("Баланс", max_digits=10, decimal_places=2, default=0.00)
   account = models.BigIntegerField(editable=False)
+  username = models.CharField(
+    max_length=150, 
+    unique=True,
+    validators=[],
+  )
 
   objects = CustomUserManager()
 
   USERNAME_FIELD = 'email'
-  REQUIRED_FIELDS = ['username']
+  REQUIRED_FIELDS = []
 
   def save(self, *args, **kwargs):
     if not self.pk:
