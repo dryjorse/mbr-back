@@ -15,12 +15,14 @@ class PaymentSerializer(serializers.ModelSerializer):
   def create(self, validated_data):
     user = self.context['request'].user
     summ = validated_data['summ']
+    type = validated_data['type']
 
-    if user.balance < summ:
-      raise serializers.ValidationError("Insufficient balance.")
-
-    user.balance -= summ
-    user.save()
+    if type != "tulpar":
+      if user.balance < summ:
+        raise serializers.ValidationError("Insufficient balance.")
+      
+      user.balance -= summ
+      user.save()
 
     payment = Payment.objects.create(user=user, **validated_data)
     return payment
