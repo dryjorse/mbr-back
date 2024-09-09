@@ -1,5 +1,6 @@
 from django.db import models
 from users.models import User
+from django.utils import timezone
 import random
 
 class Payment(models.Model):
@@ -16,7 +17,7 @@ class Payment(models.Model):
   phone = models.IntegerField("Номер телефона", blank=True, null=True)
   transport_code = models.IntegerField("Код транспорта", blank=True, null=True)
   receipt_number = models.CharField(editable=False)
-  created_at = models.DateTimeField(auto_now_add=True)
+  created_at = models.DateTimeField(verbose_name="Дата создания", default=timezone.now)
   user = models.ForeignKey(User, related_name="payments", on_delete=models.CASCADE)
 
   class Meta:
