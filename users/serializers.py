@@ -50,6 +50,6 @@ class ProfileSerializer(serializers.ModelSerializer):
     fields = ['id', 'username', 'email', 'phone', 'account', 'balance', 'payments']
 
   def get_payments(self, obj):
-    payments = obj.user_payments.all().order_by('-created_at')
+    payments = obj.payments_made.all().order_by('-created_at')
     serializer = PaymentSerializer(payments, many=True)
     return serializer.data

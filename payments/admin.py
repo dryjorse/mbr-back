@@ -5,7 +5,7 @@ from django.utils.timezone import localtime
 
 @admin.register(Payment)
 class PaymentsAdmin(admin.ModelAdmin):
-  list_display = ('summ', 'get_users', 'geolocation', 'formatted_created_at')
+  list_display = ('summ', 'get_users', 'fullname', 'geolocation', 'formatted_created_at')
   ordering = ['-created_at']
   readonly_fields = ['receipt_number']
 
