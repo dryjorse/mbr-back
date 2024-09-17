@@ -32,7 +32,7 @@ SECRET_KEY = 'django-insecure-@^r*k6&-ig-^bc$8v)x*tp-=-lky9v50srswob8+$!6d2&5ti-
 DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
-CORS_ALLOWED_ORIGINS = ["https://mbr.vercel.app"]
+CORS_ALLOWED_ORIGINS = ["https://mbr.vercel.app", "http://localhost:3000"]
 
 
 # Application definition

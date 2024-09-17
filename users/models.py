@@ -31,6 +31,7 @@ class User(AbstractUser):
   phone = models.IntegerField("Номер телефона", unique=True)
   balance = models.DecimalField("Баланс", max_digits=10, decimal_places=2, default=0.00)
   account = models.BigIntegerField(editable=False)
+  payments = models.ManyToManyField('payments.Payment', related_name='user_payments')
   username = models.CharField(
     max_length=150, 
     unique=True,

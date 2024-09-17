@@ -18,7 +18,7 @@ class Payment(models.Model):
   transport_code = models.IntegerField("Код транспорта", blank=True, null=True)
   receipt_number = models.CharField(editable=False)
   created_at = models.DateTimeField(verbose_name="Дата создания", default=timezone.now)
-  user = models.ForeignKey(User, related_name="payments", on_delete=models.CASCADE)
+  users = models.ManyToManyField(User, related_name='payments_made')
 
   class Meta:
     verbose_name = "Платежи"
