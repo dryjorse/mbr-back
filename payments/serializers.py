@@ -4,7 +4,7 @@ from .models import Payment
 class PaymentSerializer(serializers.ModelSerializer):
   class Meta:
     model = Payment
-    fields = ['id', 'type', 'summ', 'fullname', 'phone', 'transport_code', 'geolocation', 'receipt_number', 'is_success', 'created_at']
+    fields = ['id', 'type', 'summ', 'fullname', 'phone', 'transport_code', 'geolocation', 'receipt_number', 'is_success', 'created_at' , 'users']
     read_only_fields = ['user', 'created_at', 'receipt_number']
 
   def validate_summ(self, value):
