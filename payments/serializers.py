@@ -14,6 +14,7 @@ class PaymentSerializer(serializers.ModelSerializer):
 
   def create(self, validated_data):
     user = self.context['request'].user
+    users = validated_data.pop('users', None)
     summ = validated_data['summ']
     type = validated_data['type']
 
@@ -24,5 +25,9 @@ class PaymentSerializer(serializers.ModelSerializer):
       user.balance -= summ
       user.save()
 
-    payment = Payment.objects.create(user=user, **validated_data)
+    payment = Payment.objects.create(**validated_data)
+
+    if users:
+      payment.users.set(users)
+    
     return payment
