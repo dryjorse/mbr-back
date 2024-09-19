@@ -2,6 +2,8 @@ from rest_framework import serializers
 from .models import Payment
 
 class PaymentSerializer(serializers.ModelSerializer):
+  users = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), many=True, required=False)  # Поле необязательно
+
   class Meta:
     model = Payment
     fields = ['id', 'type', 'summ', 'fullname', 'phone', 'transport_code', 'geolocation', 'receipt_number', 'is_success', 'created_at', 'users']
@@ -13,11 +15,11 @@ class PaymentSerializer(serializers.ModelSerializer):
     return value
 
   def create(self, validated_data):
-    # Получаем пользователя из контекста
+    # Получаем текущего пользователя из контекста
     user = self.context['request'].user
-    users = validated_data.pop('users', None)  # Получаем других пользователей из данных
+    users = validated_data.pop('users', None)  # Получаем переданных пользователей, если они есть
 
-    # Проверяем баланс пользователя, если тип не "tulpar"
+    # Проверка баланса, если тип не "tulpar"
     summ = validated_data['summ']
     type = validated_data['type']
 
@@ -29,13 +31,13 @@ class PaymentSerializer(serializers.ModelSerializer):
       user.balance -= summ
       user.save()
 
-    # Создаем объект Payment без поля users
+    # Создаем объект Payment
     payment = Payment.objects.create(**validated_data)
 
     # Добавляем текущего пользователя в поле users
     payment.users.add(user)
 
-    # Если в запросе переданы другие пользователи, добавляем их
+    # Если переданы другие пользователи, добавляем их
     if users:
       payment.users.add(*users)
 
