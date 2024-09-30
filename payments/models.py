@@ -6,7 +6,8 @@ import random
 class Payment(models.Model):
   TYPE_CHOISES = {
     "transfer": "transfer", 
-    "tulpar": "tulpar"
+    "tulpar": "tulpar",
+    "o-dengi": "o-dengi"
   }
 
   type = models.CharField("Тип", max_length=255, choices=TYPE_CHOISES)
